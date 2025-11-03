@@ -1,0 +1,8 @@
+.items{
+    width:100px;
+    height:120px;
+    background-color: rgb(228, 233, 237);
+}
+.items.active{
+    background-color: rgb(210, 181, 238);
+}
