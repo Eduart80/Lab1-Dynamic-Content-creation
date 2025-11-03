@@ -6,3 +6,33 @@
 .items.active{
     background-color: rgb(210, 181, 238);
 }
+
+/* Styles for dynamically created remove button */
+.remove-from-cart {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    cursor: pointer;
+    margin-left: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.remove-from-cart:hover {
+    background-color: #c82333;
+    transform: scale(1.05);
+}
+
+/* Styles for cart list items */
+#batch-list li {
+    padding: 8px;
+    margin: 5px 0;
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

@@ -27,7 +27,16 @@ productList.addEventListener('click',(event)=>{
         const name = productItem.querySelector('h5').textContent
         const price = event.target.getAttribute('data-price')
         
-        list.innerHTML = name + '  $' + price + ' <button class="remove-from-cart">Remove</button>'
+        const itemText = document.createElement('span')
+        itemText.textContent = `${name} - $${price}`
+        
+        const removeBtn = document.createElement('button')
+        removeBtn.className = 'btn btn-danger btn-sm remove-from-cart'
+        removeBtn.textContent = 'Remove'
+        
+        list.appendChild(itemText)
+        list.appendChild(removeBtn)
+        
         UiList.appendChild(list)
         
         // Increment cart counter
