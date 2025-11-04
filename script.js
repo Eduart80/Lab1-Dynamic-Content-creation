@@ -6,18 +6,11 @@ const HTMLCountList = document.getElementsByClassName('items')
 const cartCounter = document.getElementById('cart-counter')
 const price = document.getElementById('price')
 const totalPrice = document.getElementById('priceTotal')
+const listPrice = document.createElement('li')
 
-const cartItems = [
-    { name: "Blue Parrot", price: 120, quantity: 1 },
-    { name: "Multicolor Parrot", price: 250, quantity: 1 },
-    { name: "Red Parrot", price: 850, quantity: 1 },
-    { name: "Small Parrot", price: 99, quantity: 1 },
-    { name: "White Parrot", price: 500, quantity: 1 },
-];
 
 // Shopping cart counter
 let cartCount = 0
-let totalPriceCalc = 0
 
 // Function to update cart counter
 function updateCartCounter() {
@@ -31,12 +24,14 @@ function updateCartCounter() {
 
 //add from product
 productList.addEventListener('click',(event)=>{
+    const productItem = event.target.closest('.card')
+    const name = productItem.querySelector('h5').textContent
+    const price = event.target.getAttribute('data-price')
+    const list = document.createElement('li')
+
 
     if(event.target.classList.contains('add-to-cart')){
-        const productItem = event.target.closest('.card')
-        const list = document.createElement('li')
-        const name = productItem.querySelector('h5').textContent
-        const price = event.target.getAttribute('data-price')
+        list.setAttribute('data-price', price)
         
         const itemText = document.createElement('span')
         itemText.textContent = `${name} - $${price}`
@@ -53,7 +48,7 @@ productList.addEventListener('click',(event)=>{
         // Increment cart counter
         cartCount++
         updateCartCounter()
-        calculatorTotal()
+        updateTotalDisplay()
     }
 
 })
@@ -65,6 +60,7 @@ UiList.addEventListener('click', function(event) {
             li.remove()
             cartCount--
             updateCartCounter()
+            updateTotalDisplay()
         }
     }
     if ( event.target.classList.contains('completed-from-cart')) {
@@ -76,10 +72,20 @@ UiList.addEventListener('click', function(event) {
     }
 });
 
-function calculatorTotal(items){
-    const total = items.reduce((accumulator, currentItem)=>{
-        const itemCost = currentItem.price * currentItem.quantity
-        return accumulator + itemCost
-    },0)
+function calculateTotal() {
+    let total = 0
+    const listItems = document.querySelectorAll('#batch-list li')
+    listItems.forEach(item => {
+        const price = parseFloat(item.getAttribute('data-price'))
+        total += price
+    })
     return total
+}
+
+function updateTotalDisplay() {
+    const total = calculateTotal()
+    const totalElement = document.getElementById('cart-total')
+    if (totalElement) {
+        totalElement.textContent = `Total: $${total}`
+    }
 }
