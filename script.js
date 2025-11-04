@@ -53,7 +53,7 @@ productList.addEventListener('click',(event)=>{
         // Increment cart counter
         cartCount++
         updateCartCounter()
-        updateTotalDisplay()
+        calculatorTotal()
     }
 
 })
