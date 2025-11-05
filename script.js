@@ -7,8 +7,9 @@ const cartCounter = document.getElementById('cart-counter')
 const price = document.getElementById('price')
 const totalPrice = document.getElementById('priceTotal')
 const listPrice = document.createElement('li')
+// user entry 
 const userEntry = document.getElementById('card-title')
-const userBtn = document.getElementById('product-List')
+// const userBtn = document.getElementById('user-List')
 const userPrice = document.getElementById('price')
 
 
@@ -25,31 +26,36 @@ function updateCartCounter() {
         cartCounter.style.display = 'none'
     }
 }
-//add from customer
-userBtn.addEventListener('click',()=>{
-    let newFrag = document.createDocumentFragment()
-    const list = document.createElement('li')
-    list.innerHTML = userEntry.value 
-    list.innerHTML = userPrice.value 
-    + ' <button class="remove-from-cart">Remove</button> '+  ' <button class="completed-from-cart">Completed</button>'
-    newFrag.appendChild(list)
-    UiList.appendChild(newFrag)
-    inputUser.value=''
-})
+
 //add from product
 productList.addEventListener('click',(event)=>{
-    const productItem = event.target.closest('.card')
-    const name = productItem.querySelector('h5').textContent
-    const price = event.target.getAttribute('data-price')
-    const list = document.createElement('li')
+    let itemText //= document.createElement('span')
+    let list //= document.createElement('li')
+    
+    
+    if(event.target.classList.contains('user-entry-cart')){
+        if(userEntry.value === '' || userPrice.value==='') return 
+        
+        itemText = document.createElement('span')
+        list = document.createElement('li')
+        itemText.textContent = `${userEntry.value} - $${userPrice.value}`
 
-
-    if(event.target.classList.contains('add-to-cart')){
+        // userEntry.value=''
+        // userPrice.value=''
+    }
+    else if(event.target.classList.contains('add-to-cart')){
+        const productItem = event.target.closest('.card')
+        const name = productItem.querySelector('h5').textContent
+        const price = event.target.getAttribute('data-price')
+        console.log('2 pop');
+        
+        list = document.createElement('li')
         list.setAttribute('data-price', price)
         
-        const itemText = document.createElement('span')
+        itemText = document.createElement('span')
         itemText.textContent = `${name} - $${price}`
         
+    }
         const removeBtn = document.createElement('button')
         removeBtn.className = 'btn btn-danger btn-sm remove-from-cart'
         removeBtn.textContent = 'Remove'
@@ -63,8 +69,9 @@ productList.addEventListener('click',(event)=>{
         cartCount++
         updateCartCounter()
         updateTotalDisplay()
-    }
-
+        
+        userEntry.value=''
+        userPrice.value=''
 })
 //remove
 UiList.addEventListener('click', function(event) {
@@ -91,7 +98,10 @@ function calculateTotal() {
     const listItems = document.querySelectorAll('#batch-list li')
     listItems.forEach(item => {
         const price = parseFloat(item.getAttribute('data-price'))
-        total += price
+        if(price){
+            total += price
+        }else{ total += parseFloat(userPrice.value)}
+
     })
     return total
 }
