@@ -9,6 +9,7 @@ On event .triger , after i get the Attribute of that class which contain data , 
 After title of article and the data is cashed, i create element('span') for me to output textContent item name and price
 
 - How did you handle invalid input for product name or price?
+I used the same event listener inisiated by click. Integrated with some logic for output, the diference was how you get the data from input fields, wich in this case was "userEntry.value"
 
 - What challenges did you face when implementing the remove functionality?<br>
 Mostly errors/retry was on finding the right element 
