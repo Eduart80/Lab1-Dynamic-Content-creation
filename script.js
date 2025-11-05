@@ -7,6 +7,10 @@ const cartCounter = document.getElementById('cart-counter')
 const price = document.getElementById('price')
 const totalPrice = document.getElementById('priceTotal')
 const listPrice = document.createElement('li')
+const userEntry = document.getElementById('card-title')
+const userBtn = document.getElementById('product-List')
+const userPrice = document.getElementById('price')
+
 
 
 // Shopping cart counter
@@ -21,7 +25,17 @@ function updateCartCounter() {
         cartCounter.style.display = 'none'
     }
 }
-
+//add from customer
+userBtn.addEventListener('click',()=>{
+    let newFrag = document.createDocumentFragment()
+    const list = document.createElement('li')
+    list.innerHTML = userEntry.value 
+    list.innerHTML = userPrice.value 
+    + ' <button class="remove-from-cart">Remove</button> '+  ' <button class="completed-from-cart">Completed</button>'
+    newFrag.appendChild(list)
+    UiList.appendChild(newFrag)
+    inputUser.value=''
+})
 //add from product
 productList.addEventListener('click',(event)=>{
     const productItem = event.target.closest('.card')
